@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -124,7 +125,13 @@ public class Player : MonoBehaviour
         }   
         isGrounded = false;
     }
-    
+
+    private void LateUpdate()
+    {
+        var cameraPosition = Camera.main.transform.position;
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, cameraPosition.z);
+    }
+
     //coroutine to increase root level while player is standing still
     private IEnumerator RootLevelIncrease()
     {
