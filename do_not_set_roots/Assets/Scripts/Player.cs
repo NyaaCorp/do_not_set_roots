@@ -14,9 +14,6 @@ public class Player : MonoBehaviour
     public bool canJump = true;
     
     //player states
-    public bool facingLeft = false;
-    public bool facingRight = false;
-    public bool standingStill = true;
     public bool isGrounded;
     public bool isJumping;
     public bool isShooting;
@@ -76,7 +73,6 @@ public class Player : MonoBehaviour
                 anim.SetBool("isRunning",true);
             sr.flipX = true;
             rb.velocity = new Vector2(-speed, rb.velocity.y);
-            standingStill = false;
         }
         else if (Input.GetKey(KeyCode.RightArrow) && canMove)
         {
@@ -84,13 +80,11 @@ public class Player : MonoBehaviour
                 anim.SetBool("isRunning",true);
             sr.flipX = false;
             rb.velocity = new Vector2(speed, rb.velocity.y);
-            standingStill = false;
         }
         else
         {
             anim.SetBool("isRunning",false);
             rb.velocity = new Vector2(0, rb.velocity.y);
-            standingStill = true;
         }
         
         //can jump if it is grounded and not rooted
@@ -117,7 +111,10 @@ public class Player : MonoBehaviour
     {
         if (isJumping)
         {
-            isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckRadius, whatIsGround);
+            isGrounded = Physics2D.BoxCast(groundCheck.position, new Vector2(0.5f, 0.5f), 0f, Vector2.down, groundCheckRadius, whatIsGround);
+            //isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckRadius, whatIsGround);
+            if(isGrounded)
+                Debug.Log("Grounded!");
             if ( isGrounded && rb.velocity.y <= 0 )
             {
                 isJumping = false;
@@ -134,7 +131,7 @@ public class Player : MonoBehaviour
         int nextRootStage = 0;
         while (true)
         {
-            if (rb.velocity.x == 0)
+            if (rb.velocity.x == 0 && !isJumping)
             {
                 rootLevel += 0.1f;
                 if(nextRootStage < rootStageTimeThresholds.Length && rootLevel >= rootStageTimeThresholds[nextRootStage])
@@ -171,6 +168,7 @@ public class Player : MonoBehaviour
     {
         int inputCount = 0;
         bool getLeft = true;
+        anim.SetBool("isStuck",true);
         while (inputCount < 5)
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Q));
@@ -179,10 +177,11 @@ public class Player : MonoBehaviour
             Debug.Log("You pressed E!");
             inputCount++;
         }
+        anim.SetBool("isStuck",false);
         currentRootStage = -1;
         rootLevel = 0f;
         breakingOutOfRoot = false;
-        canBreakOutOfRoot = false;  
+        //canBreakOutOfRoot = false;  
         Debug.Log("You broke out of root!");
     }
 }
