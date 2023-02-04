@@ -1,5 +1,0 @@
-sceneSetups:
-- path: Assets/PolyMeshWorld/2D SideScroller Pixel Art Kit Free/Scenes/GroundTest.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0
