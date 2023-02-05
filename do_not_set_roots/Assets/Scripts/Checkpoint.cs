@@ -5,9 +5,21 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    public bool changer;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            other.GetComponent<Player>().Win();
+        {
+            if (changer)
+            {
+                var animator = other.GetComponent<Animator>();
+                animator.SetLayerWeight(animator.GetLayerIndex("Old_Layer"), 1);
+            }
+            else
+            {
+                other.GetComponent<Player>().Win(); 
+            }
+        }
     }
 }

@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     [Header("UI")] 
     public GameObject winPanel;
     public GameObject loosePanel;
+    public GameObject quickTimePanel;
 
     //coroutines
     private Coroutine rootLevelIncreaseCoroutine;
@@ -153,6 +154,7 @@ public class Player : MonoBehaviour
     {
         var cameraPosition = Camera.main.transform.position;
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, cameraPosition.z);
+        quickTimePanel.SetActive(breakingOutOfRoot);
     }
 
     //coroutine to increase root level while player is standing still
