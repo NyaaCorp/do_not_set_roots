@@ -16,3 +16,8 @@ Game developed during the global game jam 2023
 [Tree shake 1](https://freesound.org/people/Anthousai/sounds/399246/)
 [Tree shake 2](https://freesound.org/people/Teaganbear/sounds/672572/)
 [Tree shake 3](https://freesound.org/people/RuonVNiekerk/sounds/327923/)
+
+### Icon
+
+[root](https://www.svgrepo.com/svg/323512/tree-roots)
+[deny](https://www.svgrepo.com/svg/434779/deny)
