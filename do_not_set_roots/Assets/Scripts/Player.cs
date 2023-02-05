@@ -54,6 +54,11 @@ public class Player : MonoBehaviour
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
 
 
+    public void Retry()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
