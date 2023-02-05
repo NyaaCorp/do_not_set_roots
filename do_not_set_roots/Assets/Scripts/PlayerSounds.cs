@@ -15,9 +15,25 @@ public class PlayerSounds : MonoBehaviour
     
     public void RunningSound()
     {
-        _audioSource.Stop();
         AudioClip c = _clips[0];
         _audioSource.PlayOneShot(c);
-    }   
+    }
+
+    public void RootsBreakSound()
+    {
+        AudioClip c = _clips[1];
+        _audioSource.PlayOneShot(c);
+    }
+    
+    public void TreeShakeSound()
+    {
+        AudioClip c = _clips[2];
+        _audioSource.PlayOneShot(c);
+    }
+    
+    public void StopSoundEffects()
+    {
+        _audioSource.Stop();
+    }
     
 }

@@ -76,9 +76,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: TreeShakeSound
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 24fac061feca5714ab8c940ac7f6a8d1, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
