@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     private float rootIncreaseStep = 0.1f;  //root level increase every 0.1s
     public float rootLevel = 0f;
     public int currentRootStage = -1;       //-1 = no root, 0 = root stage 1, 1 = root stage 2...
-    private int criticalRootStage = 2;       //root stage that will completely stop player movement, need to break out of root
+    private int criticalRootStage = 1;       //root stage that will completely stop player movement, need to break out of root
     public int rootStageAfterLanding = 1;
     //declare array of root stage thresholds with initial values
     public float[] rootStageTimeThresholds = new float[4] {1f, 1.75f, 2.5f, 3.5f};
@@ -47,7 +47,9 @@ public class Player : MonoBehaviour
     public SpriteRenderer sr;
     public Transform groundCheck;
     public Transform firePoint;
-    
+    //array of root images
+    public GameObject[] rootImages;
+
     //coroutines
     private Coroutine rootLevelIncreaseCoroutine;
     private Coroutine breakOutOfRootCoroutine;
@@ -172,6 +174,7 @@ public class Player : MonoBehaviour
                 nextRootStage = 0;
                 yield return new WaitForSeconds(0.1f);
             }
+            ShowRootImage();
         }
     }
     
@@ -195,5 +198,16 @@ public class Player : MonoBehaviour
         breakingOutOfRoot = false;
         //canBreakOutOfRoot = false;  
         Debug.Log("You broke out of root!");
+    }
+    
+    private void ShowRootImage()
+    {
+        //disable all other root images
+        for (int i = 0; i < rootImages.Length; i++)
+        {
+            rootImages[i].SetActive(false);
+        }
+        if(currentRootStage >= 0 && currentRootStage < rootImages.Length)
+            rootImages[currentRootStage].SetActive(true);
     }
 }
