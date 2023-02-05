@@ -72,11 +72,6 @@ public class Player : MonoBehaviour
     {
         winPanel.SetActive(true);
     }
-    
-    public void Retry()
-    {
-        SceneManager.LoadScene("Level");
-    }
 
     // Start is called before the first frame update
     void Start()
