@@ -579,7 +579,7 @@ MonoBehaviour:
   - 1
   - 1.75
   - 2.5
-  - 3.5
+  - 5
   canBreakOutOfRoot: 1
   rb: {fileID: 4255950060635158020}
   anim: {fileID: 5516449589493723773}

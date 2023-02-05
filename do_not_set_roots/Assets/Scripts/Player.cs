@@ -66,6 +66,11 @@ public class Player : MonoBehaviour
         loosePanel.SetActive(true);
         Destroy(gameObject);
     }
+
+    public void Win()
+    {
+        winPanel.SetActive(true);
+    }
     
     public void Retry()
     {
@@ -169,7 +174,7 @@ public class Player : MonoBehaviour
                     }
                     if (currentRootStage == rootStageTimeThresholds.Length-1)
                     {
-                        //TODO: end game
+                        Kill();
                         Debug.Log("Game Over!! YOU ROOTED TOO MUCH BOI!!");
                     }
                     nextRootStage++;
