@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -47,16 +48,25 @@ public class Player : MonoBehaviour
     public SpriteRenderer sr;
     public Transform groundCheck;
     public Transform firePoint;
+
+    [Header("UI")] 
+    public GameObject winPanel;
+    public GameObject loosePanel;
     
     //coroutines
     private Coroutine rootLevelIncreaseCoroutine;
     private Coroutine breakOutOfRootCoroutine;
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
 
-
+    public void Kill()
+    {
+        loosePanel.SetActive(true);
+        Destroy(gameObject);
+    }
+    
     public void Retry()
     {
-        
+        SceneManager.LoadScene("Level");
     }
 
     // Start is called before the first frame update
