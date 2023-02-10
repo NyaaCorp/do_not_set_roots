@@ -87,14 +87,14 @@ public class Player : MonoBehaviour
         //it can move if it is not shooting and not rooted
         canMove = !isShooting && currentRootStage < criticalRootStage;
         //movement input with arrow keys and spacebar
-        if (Input.GetKey(KeyCode.LeftArrow) && canMove)
+        if ((Input.GetKey(KeyCode.LeftArrow)||Input.GetKey(KeyCode.A)) && canMove)
         {
             if(!isJumping)
                 anim.SetBool("isRunning",true);
             sr.flipX = true;
             rb.velocity = new Vector2(-speed, rb.velocity.y);
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && canMove)
+        else if ((Input.GetKey(KeyCode.RightArrow)||Input.GetKey(KeyCode.D)) && canMove)
         {
             if(!isJumping)
                 anim.SetBool("isRunning",true);
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         //can jump if it is grounded and not rooted
         canJump = (!isJumping && currentRootStage == -1);
         //jumping input with spacebar
-        if (Input.GetKeyDown(KeyCode.Space) && canMove && canJump)
+        if ((Input.GetKeyDown(KeyCode.Space)||Input.GetKey(KeyCode.W)) && canMove && canJump)
         {
             anim.SetBool("isJumping",true);
             isJumping = true;
