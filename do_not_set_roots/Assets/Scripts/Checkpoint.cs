@@ -31,7 +31,7 @@ public class Checkpoint : MonoBehaviour
             if (changer)
             {
                 var animator = other.GetComponent<Animator>();
-                animator.SetLayerWeight(animator.GetLayerIndex("Old_Layer"), 0);
+                animator.SetLayerWeight(animator.GetLayerIndex("Old_Layer"), 1);
             }
             else
             {
