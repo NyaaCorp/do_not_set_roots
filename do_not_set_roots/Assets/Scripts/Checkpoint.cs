@@ -18,8 +18,25 @@ public class Checkpoint : MonoBehaviour
             }
             else
             {
-                other.GetComponent<Player>().Win(); 
+                other.GetComponent<Player>().SetHealthyPlace(true);
             }
         }
+    }
+
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (changer)
+            {
+                var animator = other.GetComponent<Animator>();
+                animator.SetLayerWeight(animator.GetLayerIndex("Old_Layer"), 0);
+            }
+            else
+            {
+                other.GetComponent<Player>().SetHealthyPlace(false);
+            }
+        }    
     }
 }

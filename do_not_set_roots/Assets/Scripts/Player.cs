@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     public float[] rootStageTimeThresholds = new float[4] {1f, 1.75f, 2.5f, 3.5f};
     public bool canBreakOutOfRoot = true;
     private bool breakingOutOfRoot = false;
+    private bool healthyPlace = false;
 
     //player components
     public Rigidbody2D rb;
@@ -54,7 +55,9 @@ public class Player : MonoBehaviour
 
     [Header("UI")] 
     public GameObject winPanel;
-    public GameObject loosePanel;
+    public GameObject rootPanel;
+    public GameObject losePanel;
+    public GameObject deadPanel;
     public GameObject quickTimePanel;
 
     //coroutines
@@ -64,8 +67,27 @@ public class Player : MonoBehaviour
 
     public void Kill()
     {
-        loosePanel.SetActive(true);
+        deadPanel.SetActive(true);
         Destroy(gameObject);
+    }
+    public void UnhealthyRoots()
+    {
+        losePanel.SetActive(true);
+        Destroy(gameObject);
+        //TODO: instead of destroying the player
+        //TODO: first destroy all the dead trees in the scene
+        //TODO: then spawn a dead tree that can be used as platform in the next game
+        
+    }
+
+    public void SetHealthyPlace(bool isHealthyPlace)
+    {
+        if(isHealthyPlace)
+            rootPanel.SetActive(true);
+        else
+            rootPanel.SetActive(false);
+        
+        this.healthyPlace = isHealthyPlace;
     }
 
     public void Win()
@@ -84,6 +106,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //it can move if it is not shooting and not rooted
         canMove = !isShooting && currentRootStage < criticalRootStage;
         //movement input with arrow keys and spacebar
@@ -126,6 +149,14 @@ public class Player : MonoBehaviour
 
     }
     
+    void checkWin()
+    {
+        if (healthyPlace && currentRootStage == rootStageTimeThresholds.Length-1)
+        {
+            Win();
+        }
+    }
+
     //detect if player is grounded
     private void FixedUpdate()
     {
@@ -147,9 +178,15 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
+
         var cameraPosition = Camera.main.transform.position;
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, cameraPosition.z);
-        quickTimePanel.SetActive(breakingOutOfRoot);
+        
+        if(!healthyPlace)
+            quickTimePanel.SetActive(breakingOutOfRoot);
+        else
+            checkWin();
+        rootPanel.SetActive(healthyPlace);
     }
 
     //coroutine to increase root level while player is standing still
@@ -169,9 +206,9 @@ public class Player : MonoBehaviour
                     {
                         Debug.Log("Critical root stage reached, need to break out of it to move again!");
                     }
-                    if (currentRootStage == rootStageTimeThresholds.Length-1)
+                    if (currentRootStage == rootStageTimeThresholds.Length-1 && !healthyPlace)
                     {
-                        Kill();
+                        UnhealthyRoots();
                         Debug.Log("Game Over!! YOU ROOTED TOO MUCH BOI!!");
                     }
                     nextRootStage++;
@@ -196,7 +233,8 @@ public class Player : MonoBehaviour
     {
         int inputCount = 0;
         bool getLeft = true;
-        anim.SetBool("isStuck",true);
+        if(!healthyPlace)
+            anim.SetBool("isStuck",true);
         while (inputCount < 5)
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Q));
